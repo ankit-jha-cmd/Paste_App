@@ -1,52 +1,43 @@
-import { useState } from "react"
-import {useSearchParams} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import  Home  from './components/Home'
+import Pastes  from './components/Pastes'
+import ViewPaste from './components/ViewPastes'
+import Navbar from "./components/Navbar";
+import { Toaster } from 'react-hot-toast';
 
-
+const routes= createBrowserRouter([
+    {
+      path : '/',
+      element : 
+      <div>
+        <Navbar />
+        <Home />
+      </div>
+    },
+    {
+      path : '/pastes',
+      element : 
+      <div>
+        <Navbar />
+        <Pastes />
+      </div>
+    },
+    {
+      path : '/pastes/:id',
+      element : 
+      <div>
+        <Navbar />
+        <ViewPaste />
+      </div>
+    }
+  ])
 
 function App() {
-  const[title, setTitle]= useState('');
-  const[body, setBody]= useState('');
-  const[actualLink, setActualLink]=useSearchParams();
-  const pasteId=actualLink.get('pasteId');
 
-
-  function handleSubmit(){
-    if(pasteId){
-      
-    }
-    else(){
-
-    }
-    
-
-    setActualLink({});
-    setTitle('');
-    setBody('');
-
-  }
-
-  return (
+  return(
     <>
-      <div>
-        <input 
-          type="text"
-          value={title}
-          placeholder="Add your title"
-          onChange={(e)=>setTitle(e.target.value)}
-        />
-
-        <button
-          onClick={handleSubmit}
-        >{pasteId? 'Update Your Paste' : 'Create Your Paste'}</button>
-      </div>
-
-      <div>
-        <textarea 
-          placeholder="Add your code"
-          value={body}
-          onChange={(e)=>setBody(e.target.value)}
-        />
-      </div>
+    <Toaster />
+    <RouterProvider router={routes} />
     </>
   )
 }
